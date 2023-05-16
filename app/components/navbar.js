@@ -22,14 +22,6 @@ export default function Navbar() {
     );
   }
   return null;
-
-  //   return (
-  //     <div className="bg-green-500">
-  //       <li>
-  //         <Link href="/dashboard/schedule">Appointments</Link>
-  //       </li>
-  //     </div>
-  //   );
 }
 
 export async function getServerSideProps(context) {
