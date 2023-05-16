@@ -7,14 +7,16 @@ export default function LoginBtn() {
   if (!session) {
     return (
       <>
-        Not signed in <br />
-        <button
-          onClick={() =>
-            signIn("github", { callbackUrl: "/dashboard/schedule" })
-          }
-        >
-          Sign in
-        </button>
+        <div className="flex items-center justify-center h-screen">
+          <button
+            onClick={() =>
+              signIn("github", { callbackUrl: "/dashboard/schedule" })
+            }
+            className="bg-gray-200 py-2 px-8 rounded-md text-lg shadow-md"
+          >
+            Sign in
+          </button>
+        </div>
       </>
     );
   }
