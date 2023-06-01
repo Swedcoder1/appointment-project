@@ -63,7 +63,7 @@ export default function Navbar() {
           } fixed top-0 left-0 z-40 w-16 lg:w-16 h-screen transition-transform sm:translate-x-0`}
           aria-label="Sidebar"
         >
-          <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+          <div class="h-full px-3 py-4 overflow-y-auto shadow-xl ">
             <div class="flex items-center pl-2.5 mb-5">
               {/* Logo */}
               <img
@@ -76,11 +76,11 @@ export default function Navbar() {
               <li>
                 <Link
                   href="#"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full"
                 >
                   <svg
                     aria-hidden="true"
-                    class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="transition duration-75 text-green-800 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -97,12 +97,12 @@ export default function Navbar() {
               <li>
                 <Link
                   href="/dashboard/schedule"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full"
                   onClick={handleClick}
                 >
                   <svg
                     aria-hidden="true"
-                    class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="transition duration-75 text-green-800 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -121,12 +121,12 @@ export default function Navbar() {
               <li>
                 <Link
                   href="/dashboard/patients"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full"
                   onClick={handleClick}
                 >
                   <svg
                     aria-hidden="true"
-                    class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="transition duration-75 text-green-800 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ export default function Navbar() {
                 </Link>
               </li>
 
-              <li className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <li className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full">
                 {/* <svg
                   aria-hidden="true"
                   class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -167,7 +167,7 @@ export default function Navbar() {
                 >
                   <svg
                     aria-hidden="true"
-                    class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-6 h-6 text-green-800 transition duration-75 hover:text-white "
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
