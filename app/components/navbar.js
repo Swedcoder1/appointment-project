@@ -80,7 +80,7 @@ export default function Navbar() {
                 >
                   <svg
                     aria-hidden="true"
-                    className="transition duration-75 text-green-800 hover:text-white"
+                    className="transition duration-75 text-green-400 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@ export default function Navbar() {
                 >
                   <svg
                     aria-hidden="true"
-                    className="transition duration-75 text-green-800 hover:text-white"
+                    className="transition duration-75 text-green-400 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ export default function Navbar() {
                 >
                   <svg
                     aria-hidden="true"
-                    className="transition duration-75 text-green-800 hover:text-white"
+                    className="transition duration-75 text-green-400 hover:text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +167,7 @@ export default function Navbar() {
                 >
                   <svg
                     aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-green-800 transition duration-75 hover:text-white "
+                    className="flex-shrink-0 w-6 h-6 text-green-400 transition duration-75 hover:text-white "
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
