@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
+import { MdHealthAndSafety } from "react-icons/md";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -64,13 +65,9 @@ export default function Navbar() {
           aria-label="Sidebar"
         >
           <div class="h-full px-3 py-4 overflow-y-auto shadow-xl ">
-            <div class="flex items-center pl-2.5 mb-5">
+            <div class="flex items-center mb-5">
               {/* Logo */}
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                class="h-6 mr-3 sm:h-7"
-                alt="Flowbite Logo"
-              />
+              <MdHealthAndSafety className="text-4xl text-green-600" />
             </div>
             <ul class="space-y-2 font-medium">
               <li>
