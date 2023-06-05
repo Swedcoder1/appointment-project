@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/authoptions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import PatientPage from "@/app/components/patientComponents/PatientPage";
 
 export default function Patients() {
   const { data: session } = useSession();
@@ -10,9 +11,7 @@ export default function Patients() {
   if (session) {
     return (
       <>
-        <p>Patients page</p>
-        <h1>Protected Page {session.user.name}</h1>
-        <p>You can view this page because you are signed in.</p>
+        <PatientPage session={session} />
       </>
     );
   }
