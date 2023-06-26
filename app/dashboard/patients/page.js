@@ -1,6 +1,5 @@
 "use client";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/authoptions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import PatientPage from "@/app/components/patientComponents/PatientPage";
