@@ -11,7 +11,7 @@ export default function Patients() {
   if (session) {
     return (
       <>
-        <PatientPage session={session} />
+        <PatientPage />
       </>
     );
   }
@@ -23,12 +23,4 @@ export default function Patients() {
       </Link>
     </p>
   );
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(context.req, context.res, authOptions),
-    },
-  };
 }
