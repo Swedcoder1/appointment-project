@@ -5,14 +5,14 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Schedule() {
-  const { data: session } = useSession();
+  const { data: session } = useSession({ required: true });
 
   if (session) {
     return (
       <>
         <p>Schedule page</p>
 
-        <h1>Protected Page {session.user.name}</h1>
+        <h1>Protected Page {session?.user?.name}</h1>
         <p>You can view this page because you are signed in.</p>
       </>
     );
@@ -25,12 +25,4 @@ export default function Schedule() {
       </Link>
     </p>
   );
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(context.req, context.res, authOptions),
-    },
-  };
 }
