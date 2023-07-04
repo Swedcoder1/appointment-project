@@ -72,7 +72,7 @@ export default function Navbar() {
             <ul class="space-y-2 font-medium">
               <li>
                 <Link
-                  href="#"
+                  href="/dashboard"
                   className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full"
                 >
                   <svg
