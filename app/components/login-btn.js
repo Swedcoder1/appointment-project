@@ -15,9 +15,7 @@ export default function LoginBtn() {
               <h1 className="text-xl text-center">YouCare</h1>
             </div>
             <button
-              onClick={() =>
-                signIn("github", { callbackUrl: "/dashboard/schedule" })
-              }
+              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
               className="bg-gray-200 py-2 px-8 rounded-md text-lg shadow-md"
             >
               Sign in
