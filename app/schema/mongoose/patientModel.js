@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+// import mongoose from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const patientSchema = new Schema({
   firstName: { type: String, required: true },
@@ -7,4 +7,7 @@ const patientSchema = new Schema({
   personalId: Number,
 });
 
-const patient = new mongoose.model("Patients", patientSchema);
+// export const Patient = mongoose.model("Patients", patientSchema);
+const Patient = models.Patients || model("Patients", patientSchema);
+
+export default Patient;
