@@ -5,3 +5,11 @@ export let formSchema = yup.object().shape({
   lastName: yup.string().required(),
   personalId: yup.number().positive().integer(),
 });
+
+export let historySchema = yup.object().shape({
+  medicalHistory: yup.string(),
+  assassment: yup.string(),
+  medicalDiagnosis: yup.string(),
+  exercise: yup.string(),
+  followUp: yup.string(),
+});
