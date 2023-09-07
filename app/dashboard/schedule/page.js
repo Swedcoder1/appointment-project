@@ -2,6 +2,7 @@
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Calendar from "@/app/components/calendar/calendar";
 
 export default function Schedule() {
   const { data: session } = useSession({ required: true });
@@ -9,10 +10,11 @@ export default function Schedule() {
   if (session) {
     return (
       <>
-        <p>Schedule page</p>
+        {/* <p>Schedule page</p>
 
         <h1>Protected Page {session?.user?.name}</h1>
-        <p>You can view this page because you are signed in.</p>
+        <p>You can view this page because you are signed in.</p> */}
+        <Calendar />
       </>
     );
   }

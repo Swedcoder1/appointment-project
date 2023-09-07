@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Link from "next/link";
-import clientPromise from "@/lib/mongodb";
+import dbConnect from "@/lib/mongodb";
+import User from "../schema/mongoose/userModel";
 
 async function checkUser() {
   try {
@@ -11,22 +12,18 @@ async function checkUser() {
     console.log("Username:" + userName);
 
     //Find if a user already exists in the database.
-    const client = await clientPromise;
-    const db = client.db("appointment");
-    const findUser = await db
-      .collection("users")
-      .findOne({ username: userName });
+    await dbConnect();
+    const findUser = await User.findOne({ userName: userName });
     console.log(findUser);
 
     //If the user exist just return else add the user to the databse.
     if (findUser) {
+      console.log("user already exist");
       return;
     } else {
-      const userData = { username: userName, email: session?.user?.email };
-      db.collection("users").insertOne(userData, function (err, res) {
-        if (err) throw err;
-        res.json(console.log("1 document inserted"));
-      });
+      const userData = { userName: userName, email: session?.user?.email };
+      User.create(userData);
+      console.log("User created");
     }
   } catch (error) {
     console.log(error);
