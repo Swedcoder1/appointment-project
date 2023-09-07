@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { formSchema } from "@/app/schema/yup/patientSchema";
+import { getAllPatient } from "./PatientPage";
 
 const NewPatient = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -10,27 +11,28 @@ const NewPatient = () => {
   return (
     <>
       {openModal ? (
-        <div className="bg-white w-full h-full z-10 absolute">
-          <div className="absolute left-1/2 right-1/2 ml-auto mr-auto -translate-x-1/2 translate-y-1/2 z-50 bg-white shadow-lg py-8 px-4 w-8/12">
+        <div className="fixed top-1/3 translate-x-1/2 -translate-y-1/2 right-1/2 z-50 w-1/2">
+          <div className="bg-white shadow-md rounded-md py-8 px-4">
             <Formik
               initialValues={{ firstName: "", lastName: "", personalId: null }}
-              //   validate={(values) => {
-              //     const errors = {};
-              //     if (!values.email) {
-              //       errors.email = "Required";
-              //     } else if (
-              //       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-              //     ) {
-              //       errors.email = "Invalid email address";
-              //     }
-              //     return errors;
-              //   }}
               validationSchema={formSchema}
               onSubmit={(values, { setSubmitting }) => {
+                fetch("http://localhost:3000/api/patient", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(values),
+                  cache: "no-store",
+                });
+
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+                  // alert(JSON.stringify(values, null, 2));
                   setSubmitting(false);
                 }, 400);
+
+                setOpenModal(false);
+                getAllPatient();
               }}
             >
               {({ isSubmitting }) => (
@@ -105,7 +107,7 @@ const NewPatient = () => {
         <div>
           <button
             onClick={() => setOpenModal(true)}
-            className="text-white mb-10 mt-5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+            className="fixed right-4 bottom-4 text-white mb-10 mt-5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
           >
             Add patient
           </button>
