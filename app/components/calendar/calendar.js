@@ -10,6 +10,7 @@ import { useState } from "react";
 export default function Calendar() {
   const calendarRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
+  const [dateStr, setDateStr] = useState(null);
 
   // const handleDateClick = (info) => {
   //   // You can add your event creation logic here
@@ -18,18 +19,12 @@ export default function Calendar() {
   // };
   const handleDateClick = (info) => {
     // You can add your event creation logic here
-    const { dateStr } = info;
+    setDateStr(info);
     // alert("Clicked on date: " + info.dateStr);
     setOpenModal(true);
   };
+
   return (
-    // <FullCalendar
-    //   plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-    //   initialView="dayGridWeek"
-    //   editable={true}
-    //   selectable={true}
-    //   nowIndicator={true}
-    // />
     <div>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
@@ -82,7 +77,9 @@ export default function Calendar() {
           }
         }}
       />
-      {openModal && <CalendarModal setOpenModal={setOpenModal} />}
+      {openModal && (
+        <CalendarModal setOpenModal={setOpenModal} dateStr={dateStr} />
+      )}
     </div>
   );
 }
