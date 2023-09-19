@@ -5,13 +5,27 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRef } from "react";
 import CalendarModal from "./calendarModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Calendar() {
   const calendarRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [dateStr, setDateStr] = useState(null);
+  const [data, setData] = useState(null);
 
+  useEffect(() => {
+    fetch("http://localhost:3000/api/appointments", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log("Appointments " + data);
+      });
+  }, []);
   // const handleDateClick = (info) => {
   //   // You can add your event creation logic here
   //   const { dateStr } = info;
@@ -58,16 +72,20 @@ export default function Calendar() {
         stickyHeaderDates={true}
         dateClick={handleDateClick}
         // handleWindowResize={true}
-        initialEvents={[
-          {
-            title: "Alexander Carlgren",
-            start: "2023-09-07T10:00:00",
-            resourceId: "a",
-            interactive: true,
-            editable: true,
-            url: "https://google.com/",
-          },
-        ]}
+        // events={[
+        //   {
+        //     title: "Alexander Carlgren",
+        //     start: "2023-09-20T10:00:00",
+        //     resourceId: "a",
+        //     interactive: true,
+        //     editable: true,
+        //     url: "https://google.com/",
+        //   },
+        // ]}
+        events={data?.map((appointment) => ({
+          title: appointment.patientName,
+          start: appointment.scheduleDate + "T" + appointment.scheduleTime,
+        }))}
         eventClick={function (info) {
           alert(JSON.stringify(info.event.title));
           info.jsEvent.preventDefault(); // don't let the browser navigate
