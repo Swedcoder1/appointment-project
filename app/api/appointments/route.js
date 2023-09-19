@@ -19,3 +19,14 @@ export async function POST(req) {
     console.log(error);
   }
 }
+
+export async function GET() {
+  try {
+    await dbConnect();
+    const allAppointments = await Appointments.find({});
+    console.log(allAppointments);
+    return NextResponse.json(allAppointments);
+  } catch (error) {
+    console.log(error);
+  }
+}
