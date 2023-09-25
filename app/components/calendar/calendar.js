@@ -6,12 +6,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRef } from "react";
 import CalendarModal from "./calendarModal";
 import { useState, useEffect } from "react";
+import PatientModal from "./patientModal";
 
 export default function Calendar() {
   const calendarRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [dateStr, setDateStr] = useState(null);
   const [data, setData] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [eventData, setEventData] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/appointments", {
@@ -83,18 +86,24 @@ export default function Calendar() {
         //   },
         // ]}
         events={data?.map((appointment) => ({
+          id: appointment.patientId,
+          _id: appointment._id,
           title: appointment.patientName,
           start: appointment.scheduleDate + "T" + appointment.scheduleTime,
         }))}
         eventClick={function (info) {
-          alert(JSON.stringify(info.event.title));
-          info.jsEvent.preventDefault(); // don't let the browser navigate
+          // alert(JSON.stringify(info.event.title));
+          setEventData(info);
+          // alert(JSON.stringify(info.event.id));
 
+          info.jsEvent.preventDefault(); // don't let the browser navigate
+          setOpen(true);
           if (info.event.url) {
             window.open(info.event.url);
           }
         }}
       />
+      {open && <PatientModal eventData={eventData} setOpen={setOpen} />}
       {openModal && (
         <CalendarModal setOpenModal={setOpenModal} dateStr={dateStr} />
       )}
