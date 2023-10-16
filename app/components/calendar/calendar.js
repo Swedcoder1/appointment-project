@@ -7,6 +7,7 @@ import { useRef } from "react";
 import CalendarModal from "./calendarModal";
 import { useState, useEffect } from "react";
 import PatientModal from "./patientModal";
+import { useRouter } from "next/navigation";
 
 export default function Calendar() {
   const calendarRef = useRef(null);
@@ -15,6 +16,7 @@ export default function Calendar() {
   const [data, setData] = useState(null);
   const [open, setOpen] = useState(false);
   const [eventData, setEventData] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/appointments", {
@@ -28,7 +30,7 @@ export default function Calendar() {
         setData(data);
         console.log("Appointments " + data);
       });
-  }, []);
+  }, [openModal, open]);
   // const handleDateClick = (info) => {
   //   // You can add your event creation logic here
   //   const { dateStr } = info;
@@ -64,7 +66,7 @@ export default function Calendar() {
         }}
         initialView="timeGridWeek"
         nowIndicator={true}
-        editable={true}
+        // editable={true}
         selectable={true}
         selectMirror={true}
         weekends={false}
@@ -74,27 +76,16 @@ export default function Calendar() {
         slotDuration={"00:15:00"}
         stickyHeaderDates={true}
         dateClick={handleDateClick}
-        // handleWindowResize={true}
-        // events={[
-        //   {
-        //     title: "Alexander Carlgren",
-        //     start: "2023-09-20T10:00:00",
-        //     resourceId: "a",
-        //     interactive: true,
-        //     editable: true,
-        //     url: "https://google.com/",
-        //   },
-        // ]}
+        //Display patient appointments
         events={data?.map((appointment) => ({
-          id: appointment.patientId,
-          _id: appointment._id,
+          id: appointment._id,
+          _id: appointment.patientId,
           title: appointment.patientName,
           start: appointment.scheduleDate + "T" + appointment.scheduleTime,
         }))}
         eventClick={function (info) {
           // alert(JSON.stringify(info.event.title));
           setEventData(info);
-          // alert(JSON.stringify(info.event.id));
 
           info.jsEvent.preventDefault(); // don't let the browser navigate
           setOpen(true);
@@ -103,9 +94,19 @@ export default function Calendar() {
           }
         }}
       />
-      {open && <PatientModal eventData={eventData} setOpen={setOpen} />}
+      {open && (
+        <PatientModal
+          eventData={eventData}
+          setOpen={setOpen}
+          // router={router}
+        />
+      )}
       {openModal && (
-        <CalendarModal setOpenModal={setOpenModal} dateStr={dateStr} />
+        <CalendarModal
+          setOpenModal={setOpenModal}
+          dateStr={dateStr}
+          // router={router}
+        />
       )}
     </div>
   );
