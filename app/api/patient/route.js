@@ -15,30 +15,29 @@ export async function GET() {
 
 export async function POST(req) {
   try {
+    await dbConnect();
     const body = await req.json();
-    console.log("Request: " + JSON.stringify(body));
-    if (body) {
-      await dbConnect();
-      const patientData = body;
-      console.log(body);
-      Patient.create(patientData);
-      console.log("Patient created");
-      return NextResponse.json({ status: 200, message: "Form submitted" });
-    } else {
-      return NextResponse.json({ status: 500, message: "No formdata" });
+    const patientData = body;
+    const checkPatient = await Patient.findOne({
+      dateOfBirth: patientData.dateOfBirth,
+    });
+
+    if (!checkPatient) {
+      console.log("Does not exist");
+      await Patient.create(patientData);
+      return NextResponse.json({ status: 200, message: "Patient created" });
+    } else if (checkPatient) {
+      console.log("Does exist");
+      return NextResponse.json({
+        status: 409,
+        message: "Patient already exist",
+      });
     }
   } catch (error) {
     console.log(error);
-  }
-}
-
-export async function DELETE(req) {
-  try {
-    console.log("request:" + req);
-    const body = await req;
-    console.log("ID: " + JSON.stringify(body));
-    return NextResponse.json({ status: 200, message: "Data recieved" });
-  } catch (error) {
-    console.log(error);
+    return NextResponse.json({
+      status: 500,
+      message: "Patient not created, try again",
+    });
   }
 }
