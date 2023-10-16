@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { getAllPatient } from "../patientComponents/PatientPage";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { appointmentSchema } from "@/app/schema/yup/appointmentSchema";
 
@@ -18,25 +18,18 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
       .then((res) => res.json())
       .then((data) => {
         setPatientData(data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-    // if (!res.ok) {
-    //   // This will activate the closest `error.js` Error Boundary
-    //   throw new Error("Failed to fetch data");
-    // }
-
-    // return res.json();
   }, []);
 
-  // function getPatients() {}
-
-  // const patients = getPatients();
-  console.log("From patientmodal  " + JSON.stringify(patientData));
+  // console.log("From patientmodal  " + JSON.stringify(patientData));
   // console.log("dateStr " + JSON.stringify(dateStr.dateStr));
   let date = dateStr.dateStr.slice(0, 10);
   let time = dateStr.dateStr.slice(11, 16);
   // console.log("Date " + date, "Time" + time);
-  let patientFullName;
+  // let patientFullName;
 
   return (
     <div className="shadow-md border border-solid rounded-md bg-white w-2/5 top-1/3 fixed right-1/2 left-1/2 mr-auto -translate-x-1/2 z-50">
@@ -54,10 +47,10 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
             (patient) =>
               patient.firstName + " " + patient.lastName == values.patientName
           );
-          console.log("Find id with find() " + JSON.stringify(result));
+          // console.log("Find id with find() " + JSON.stringify(result));
           values.patientId = result._id;
 
-          alert(JSON.stringify(values, null, 2));
+          // alert(JSON.stringify(values, null, 2));
           setTimeout(() => {
             setSubmitting(false);
           }, 400);
@@ -69,9 +62,12 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
             },
             body: JSON.stringify(values),
             cache: "no-store",
-          });
-
-          setOpenModal(false);
+          })
+            .then((res) => {
+              res.json();
+              setOpenModal(false);
+            })
+            .catch((error) => error);
         }}
       >
         {({ isSubmitting, values, errors, touched }) => (
@@ -91,7 +87,8 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
 
                   return (
                     <option value={patientName} key={patient._id}>
-                      {patient.firstName} {patient.lastName} - {patient._id}
+                      {patient.firstName} {patient.lastName}
+                      {/* - {patient._id} */}
                     </option>
                   );
                 })}
