@@ -1,25 +1,24 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function PatientModal({ eventData, setOpen }) {
   let date = eventData.event.startStr.slice(0, 10);
   let time = eventData.event.startStr.slice(11, 16);
 
   const deletePatientAppointment = () => {
-    console.log(
-      "From delete func " + JSON.stringify(eventData.event.extendedProps._id)
-    );
-    const id = eventData.event.extendedProps._id;
+    // console.log("From delete func " + JSON.stringify(eventData.event.id));
+    const id = eventData.event.id;
 
     fetch("http://localhost:3000/api/appointments/" + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(eventData.event.id),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        res.json();
+        setOpen(false);
+      })
       .catch((error) => console.log(error));
   };
   return (
@@ -39,7 +38,7 @@ export default function PatientModal({ eventData, setOpen }) {
 
       <div className="space-x-4 ml-2 mt-6 mb-2">
         <Link
-          href={`/dashboard/patients/${eventData.event.id}`}
+          href={`/dashboard/patients/${eventData.event.extendedProps._id}`}
           className="hover:cursor-pointer"
           target="_blank"
           rel="noopener noreferrer"
