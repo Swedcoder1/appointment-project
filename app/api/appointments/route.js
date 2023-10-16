@@ -17,6 +17,10 @@ export async function POST(req) {
     return NextResponse.json({ status: 200, message: "Saved successfully" });
   } catch (error) {
     console.log(error);
+    return NextResponse.json({
+      status: 500,
+      message: "Could not schedule appointment",
+    });
   }
 }
 
@@ -28,5 +32,9 @@ export async function GET() {
     return NextResponse.json(allAppointments);
   } catch (error) {
     console.log(error);
+    return NextResponse.json({
+      status: 500,
+      message: "Could not schedule appointment",
+    });
   }
 }
