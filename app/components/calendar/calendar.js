@@ -8,15 +8,15 @@ import CalendarModal from "./calendarModal";
 import { useState, useEffect } from "react";
 import PatientModal from "./patientModal";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import Loading from "../Loading";
 
 export default function Calendar() {
-  const calendarRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
   const [dateStr, setDateStr] = useState(null);
   const [data, setData] = useState(null);
   const [open, setOpen] = useState(false);
   const [eventData, setEventData] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/appointments", {
@@ -31,13 +31,8 @@ export default function Calendar() {
         console.log("Appointments " + data);
       });
   }, [openModal, open]);
-  // const handleDateClick = (info) => {
-  //   // You can add your event creation logic here
-  //   const { dateStr } = info;
-  //   console.log("Clicked on date: ", dateStr);
-  // };
+
   const handleDateClick = (info) => {
-    // You can add your event creation logic here
     setDateStr(info);
     // alert("Clicked on date: " + info.dateStr);
     setOpenModal(true);
@@ -45,68 +40,60 @@ export default function Calendar() {
 
   return (
     <div>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek",
-        }}
-        titleFormat={{
-          month: "short",
-          day: "2-digit",
-          weekday: "short",
-        }}
-        eventTimeFormat={{
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          // hour12: false,
-          meridiem: false,
-        }}
-        initialView="timeGridWeek"
-        nowIndicator={true}
-        // editable={true}
-        selectable={true}
-        selectMirror={true}
-        weekends={false}
-        businessHours={true}
-        slotMinTime={"08:00:00"}
-        slotMaxTime={"18:00:00"}
-        slotDuration={"00:15:00"}
-        stickyHeaderDates={true}
-        dateClick={handleDateClick}
-        //Display patient appointments
-        events={data?.map((appointment) => ({
-          id: appointment._id,
-          _id: appointment.patientId,
-          title: appointment.patientName,
-          start: appointment.scheduleDate + "T" + appointment.scheduleTime,
-        }))}
-        eventClick={function (info) {
-          // alert(JSON.stringify(info.event.title));
-          setEventData(info);
+      <Suspense fallback={<Loading />}>
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "timeGridWeek,timeGridDay",
+          }}
+          titleFormat={{
+            month: "short",
+            day: "2-digit",
+            weekday: "short",
+          }}
+          eventTimeFormat={{
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            // hour12: false,
+            meridiem: false,
+          }}
+          initialView="timeGridWeek"
+          nowIndicator={true}
+          // editable={true}
+          selectable={true}
+          selectMirror={true}
+          weekends={false}
+          businessHours={true}
+          slotMinTime={"08:00:00"}
+          slotMaxTime={"18:00:00"}
+          slotDuration={"00:15:00"}
+          stickyHeaderDates={true}
+          dateClick={handleDateClick}
+          //Display patient appointments
+          events={data?.map((appointment) => ({
+            id: appointment._id,
+            _id: appointment.patientId,
+            title: appointment.patientName,
+            start: appointment.scheduleDate + "T" + appointment.scheduleTime,
+          }))}
+          eventClick={function (info) {
+            setEventData(info);
 
-          info.jsEvent.preventDefault(); // don't let the browser navigate
-          setOpen(true);
-          if (info.event.url) {
-            window.open(info.event.url);
-          }
-        }}
-      />
-      {open && (
-        <PatientModal
-          eventData={eventData}
-          setOpen={setOpen}
-          // router={router}
+            info.jsEvent.preventDefault(); // don't let the browser navigate
+            setOpen(true);
+            if (info.event.url) {
+              window.open(info.event.url);
+            }
+          }}
+          eventClassNames={"hover:cursor-pointer"}
         />
-      )}
+      </Suspense>
+      {open && <PatientModal eventData={eventData} setOpen={setOpen} />}
       {openModal && (
-        <CalendarModal
-          setOpenModal={setOpenModal}
-          dateStr={dateStr}
-          // router={router}
-        />
+        <CalendarModal setOpenModal={setOpenModal} dateStr={dateStr} />
       )}
     </div>
   );
