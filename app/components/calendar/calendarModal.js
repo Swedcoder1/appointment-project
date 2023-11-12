@@ -32,7 +32,7 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
   // let patientFullName;
 
   return (
-    <div className="shadow-md border border-solid rounded-md bg-white w-2/5 top-1/3 fixed right-1/2 left-1/2 mr-auto -translate-x-1/2 z-50">
+    <div className="shadow-md border border-solid rounded-md bg-white lg:w-1/3 md:w-8/12 w-10/12 top-1/3 fixed right-1/2 left-1/2 mr-auto -translate-x-1/2 z-50">
       <Formik
         initialValues={{
           patientName: "",
@@ -72,23 +72,28 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
       >
         {({ isSubmitting, values, errors, touched }) => (
           <Form>
-            <div className="text-center pb-10 pt-5">
+            <div className="text-center pb-6 pt-10">
               <Field
                 type="text"
                 name="patientName"
                 id="patientName"
                 list="patientNames"
-                className="outline outline-1 outline-gray-700 w-3/5 py-2 pl-2 rounded-sm"
-                placeholder="Add patient"
+                className="outline outline-1 outline-gray-700 sm:w-2/4 w-8/12 py-2 pl-2 rounded-sm"
+                placeholder="Choose patient"
               />
               <datalist id="patientNames">
                 {patientData?.map((patient) => {
                   let patientName = patient.firstName + " " + patient.lastName;
+                  //Get Date of birth as xxxxxxxx instead of xxxx-xx-xx
+                  let patientDateOfBirth = patient.dateOfBirth.replace(
+                    /-/g,
+                    ""
+                  );
 
                   return (
                     <option value={patientName} key={patient._id}>
-                      {patient.firstName} {patient.lastName}
-                      {/* - {patient._id} */}
+                      {patient.firstName} {patient.lastName} -{" "}
+                      {patientDateOfBirth}
                     </option>
                   );
                 })}
@@ -97,30 +102,36 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
                 <div>{errors.patientName}</div>
               ) : null}
             </div>
-            <div className="text-center space-x-8">
-              <Field
-                type="date"
-                name="scheduleDate"
-                className="outline outline-1 outline-gray-700"
-              />
-              {errors.scheduleDate && touched.scheduleDate ? (
-                <div>{errors.scheduleDate}</div>
-              ) : null}
-              <Field
-                type="time"
-                name="scheduleTime"
-                className="outline outline-1 outline-gray-700"
-              />
-              {errors.scheduleTime && touched.scheduleTime ? (
-                <div>{errors.scheduleTime}</div>
-              ) : null}
+            <div className="flex justify-center space-x-6">
+              <div className="flex flex-col">
+                <label className="text-center">Date</label>
+                <Field
+                  type="date"
+                  name="scheduleDate"
+                  className="outline outline-1 outline-gray-700"
+                />
+                {errors.scheduleDate && touched.scheduleDate ? (
+                  <div>{errors.scheduleDate}</div>
+                ) : null}
+              </div>
+              <div className="flex flex-col">
+                <label className="text-center">Time</label>
+                <Field
+                  type="time"
+                  name="scheduleTime"
+                  className="outline outline-1 outline-gray-700"
+                />
+                {errors.scheduleTime && touched.scheduleTime ? (
+                  <div>{errors.scheduleTime}</div>
+                ) : null}
+              </div>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-center space-x-4 mt-8 pb-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg sm:w-auto px-5 py-2.5 text-center"
               >
                 Submit
               </button>
