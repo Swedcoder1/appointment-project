@@ -5,6 +5,7 @@ const journalSchema = new Schema(
     // patient: String,
     patientId: String,
     therapiest: String,
+    signed: Boolean,
     journals: {
       medicalHistory: String,
       assessment: String,
@@ -12,7 +13,6 @@ const journalSchema = new Schema(
       exercise: String,
       followUp: String,
     },
-    signed: Boolean,
   },
   { timestamps: true }
 );
