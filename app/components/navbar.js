@@ -1,5 +1,4 @@
 "use client";
-import { getServerSession } from "next-auth/next";
 // import { authOptions } from "@/app/api/auth/authoptions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -16,18 +15,6 @@ export default function Navbar() {
 
   if (session) {
     return (
-      //   <div className="bg-green-500">
-      //     <li>
-      //       <Link href="/dashboard/schedule">Appointments</Link>
-      //     </li>
-      //     <li>
-      //       <Link href="/dashboard/patients">Patients</Link>
-      //     </li>
-
-      //     <div>
-      //       <button onClick={() => signOut()}>Sign out</button>
-      //     </div>
-      //   </div>
       <>
         <div className="flex justify-end">
           <button
@@ -35,20 +22,20 @@ export default function Navbar() {
             data-drawer-toggle="logo-sidebar"
             aria-controls="logo-sidebar"
             type="button"
-            class="flex items-center mr-2 p-2 mt-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="flex items-center mr-2 p-2 mt-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             onClick={handleClick}
           >
-            <span class="sr-only">Open sidebar</span>
+            <span className="sr-only">Open sidebar</span>
             <svg
-              class="w-6 h-6"
+              className="w-6 h-6"
               aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
+                clipRule="evenodd"
+                fillRule="evenodd"
                 d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
               ></path>
             </svg>
@@ -64,12 +51,12 @@ export default function Navbar() {
           } fixed top-0 left-0 z-40 w-16 lg:w-16 h-screen transition-transform sm:translate-x-0`}
           aria-label="Sidebar"
         >
-          <div class="h-full px-3 py-4 overflow-y-auto shadow-xl ">
-            <div class="flex items-center mb-5">
+          <div className="h-full px-3 py-4 overflow-y-auto shadow-xl ">
+            <div className="flex items-center mb-5">
               {/* Logo */}
               <MdHealthAndSafety className="text-4xl text-green-600" />
             </div>
-            <ul class="space-y-2 font-medium">
+            <ul className="space-y-2 font-medium">
               <li>
                 <Link
                   href="/dashboard"
@@ -129,9 +116,9 @@ export default function Navbar() {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     ></path>
                     <rect className="w-full h-full opacity-0">
                       <title>Patients</title>
@@ -142,22 +129,6 @@ export default function Navbar() {
               </li>
 
               <li className="flex items-center p-2 rounded-lg hover:text-white hover:bg-green-300 w-full">
-                {/* <svg
-                  aria-hidden="true"
-                  class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                > */}
-                {/* <path
-                    fill-rule="evenodd"
-                    d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                    clip-rule="evenodd"
-                  ></path>
-                  <rect className="w-full h-full opacity-0">
-                    <title>Sign out</title>
-                  </rect>
-                </svg> */}
                 <button
                   onClick={() => signOut()}
                   className="flex-start whitespace-nowrap"
@@ -170,9 +141,9 @@ export default function Navbar() {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     ></path>
                     <rect className="w-full h-full opacity-0">
                       <title>Sign out</title>
@@ -187,12 +158,4 @@ export default function Navbar() {
     );
   }
   return null;
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(context.req, context.res, authOptions),
-    },
-  };
 }
