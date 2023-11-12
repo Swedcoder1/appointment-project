@@ -2,17 +2,21 @@
 import { HiOutlineSearch } from "react-icons/hi";
 import { useState } from "react";
 import Link from "next/link";
+import DeletePatient from "./deletePatient";
+import { Suspense } from "react";
+import Loading from "../Loading";
+import NewPatient from "./newPatient";
 
-const SearchPatient = ({ test }) => {
+const SearchPatient = ({ patientData }) => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   //Search for patient
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
-    console.log(searchInput);
+    // console.log(searchInput);
     if (searchInput !== "") {
-      const filteredData = test.filter((patient) => {
+      const filteredData = patientData.filter((patient) => {
         return Object.values(patient)
           .join("")
           .toLowerCase()
@@ -21,7 +25,7 @@ const SearchPatient = ({ test }) => {
       setFilteredResults(filteredData);
       // console.log("SearchResult" + JSON.stringify(filteredData));
     } else {
-      setFilteredResults(test);
+      setFilteredResults(patientData);
     }
   };
 
@@ -30,7 +34,7 @@ const SearchPatient = ({ test }) => {
       <div>
         <form>
           <label
-            for="default-search"
+            htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
           >
             Search
@@ -50,48 +54,45 @@ const SearchPatient = ({ test }) => {
           </div>
         </form>
       </div>
+      <NewPatient />
 
-      <div className="mt-10">
+      <div className="mt-14 overflow-y-auto lg:h-96 md:h-80 h-72">
         {searchInput.length > 1
-          ? filteredResults.map((patient) => {
-              return (
-                <div
-                  className="flex justify-between mb-4 border-b-2"
-                  key={patient._id.toString()}
+          ? filteredResults.map((patient) => (
+              <div
+                className="flex justify-between pt-4 pb-1 border-b-2 hover:bg-gray-100"
+                key={patient._id.toString()}
+              >
+                <Link
+                  href={`/dashboard/patients/${patient._id.toString()}`}
+                  className="hover:cursor-pointer w-full "
                 >
-                  <Link
-                    href={`/dashboard/patients/${patient._id.toString()}`}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex space-x-1 ml-4">
-                      <p>{patient.firstName}</p>
-                      <p>{patient.lastName}</p>
-                    </div>
-                  </Link>
-                  {/* <p>{patient._id.toString()}</p> */}
-                  {/* <DeletePatient patient={patient} /> */}
-                </div>
-              );
-            })
-          : test.map((patient) => (
-              <>
-                <div
-                  className="flex justify-between mb-4 border-b-2"
-                  key={patient._id.toString()}
+                  <div className="flex space-x-1 ml-4">
+                    <p>{patient.firstName}</p>
+                    <p>{patient.lastName}</p>
+                    <p>{patient.dateOfBirth}</p>
+                  </div>
+                </Link>
+                <DeletePatient patient={patient} />
+              </div>
+            ))
+          : patientData.map((patient) => (
+              <div
+                className="flex justify-between pt-4 pb-1 border-b-2 hover:bg-gray-100"
+                key={patient._id.toString()}
+              >
+                <Link
+                  href={`/dashboard/patients/${patient._id.toString()}`}
+                  className="hover:cursor-pointer w-full"
                 >
-                  <Link
-                    href={`/dashboard/patients/${patient._id.toString()}`}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex space-x-1 ml-4">
-                      <p>{patient.firstName}</p>
-                      <p>{patient.lastName}</p>
-                    </div>
-                  </Link>
-                  {/* <p>{patient._id.toString()}</p> */}
-                  {/* <DeletePatient patient={patient} /> */}
-                </div>
-              </>
+                  <div className="flex space-x-1 ml-4">
+                    <p>{patient.firstName}</p>
+                    <p>{patient.lastName}</p>
+                    <p>{patient.dateOfBirth}</p>
+                  </div>
+                </Link>
+                <DeletePatient patient={patient} />
+              </div>
             ))}
       </div>
     </>
