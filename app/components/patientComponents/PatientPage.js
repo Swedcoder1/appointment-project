@@ -1,11 +1,8 @@
 import SearchPatient from "./SearchPatient";
-import { useSession } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { AuthOptions } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import NewPatient from "./newPatient";
-import DeletePatient from "./deletePatient";
-import Link from "next/link";
+import { Suspense } from "react";
+import Loading from "../Loading";
+import Error from "../error";
+import { ErrorBoundary } from "react-error-boundary";
 
 export async function getAllPatient() {
   let res = await fetch("http://localhost:3000/api/patient", {
@@ -13,6 +10,7 @@ export async function getAllPatient() {
     headers: {
       "Content-Type": "application/json",
     },
+    // body: therapiest,
   });
 
   if (!res.ok) {
@@ -24,42 +22,29 @@ export async function getAllPatient() {
 }
 
 export default async function PatientPage() {
-  // const session = await getServerSession(authOptions);
+  const patientData = await getAllPatient();
 
-  // console.log(JSON.stringify(allPatients));
-  const test = await getAllPatient();
-  // console.log(data);
-  console.log("Patient " + test);
+  function compare(a, b) {
+    if (a.firstName < b.firstName) {
+      return -1;
+    }
+    if (a.firstName > b.firstName) {
+      return 1;
+    }
+    return 0;
+  }
+
+  if (patientData) {
+    patientData.sort(compare);
+  }
 
   return (
     <>
-      <SearchPatient test={test} />
-      <NewPatient />
-      {/* 
-      <div>
-        <div className="">
-          {test.map((patient, index) => (
-            <>
-              <div
-                className="flex justify-between mb-4 border-b-2"
-                key={patient._id.toString()}
-              >
-                <Link
-                  href={`/dashboard/patients/${patient._id.toString()}`}
-                  className="hover:cursor-pointer"
-                >
-                  <div className="flex space-x-1 ml-4">
-                    <p>{patient.firstName}</p>
-                    <p>{patient.lastName}</p>
-                  </div>
-                </Link>
-                {/* <p>{patient._id.toString()}</p> */}
-      {/* <DeletePatient patient={patient} /> */}
-      {/* </div>
-            </>
-          ))}
-        </div>
-      </div> */}
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary fallback={<Error />}>
+          <SearchPatient patientData={patientData} />
+        </ErrorBoundary>
+      </Suspense>
     </>
   );
 }
