@@ -1,8 +1,7 @@
 "use client";
-import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import Calendar from "@/app/components/calendar/calendar";
+import AccessDeniedPage from "@/app/accessDeniedPage";
 
 export default function Schedule() {
   const { data: session } = useSession({ required: true });
@@ -14,12 +13,5 @@ export default function Schedule() {
       </>
     );
   }
-  return (
-    <p>
-      Access Denied. You need to{" "}
-      <Link className="text-blue-600" href="/">
-        log in
-      </Link>
-    </p>
-  );
+  return <AccessDeniedPage />;
 }
