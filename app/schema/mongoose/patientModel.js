@@ -4,7 +4,8 @@ import { Schema, model, models } from "mongoose";
 const patientSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  personalId: Number,
+  dateOfBirth: { type: String, required: true },
+  therapiest: { type: String, required: true },
 });
 
 // export const Patient = mongoose.model("Patients", patientSchema);
