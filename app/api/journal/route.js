@@ -14,6 +14,7 @@ export async function POST(req) {
     Journals.create({
       patientId: journalData.patientId,
       therapiest: journalData.therapiest,
+      signed: journalData.signed,
       journals: {
         medicalHistory: journalData.medicalHistory,
         assessment: journalData.assessment,
@@ -23,13 +24,6 @@ export async function POST(req) {
       },
     });
     console.log("Journal saved");
-
-    //   if (body) {
-    //     await dbConnect();
-    //     const patientData = body;
-    //     console.log(body);
-    //     Patient.create(patientData);
-    //     console.log("Patient created");
     return NextResponse.json({ status: 200, message: "Saved successfully" });
     //   } else {
     //     return NextResponse.json({ status: 500, message: "No formdata" });
