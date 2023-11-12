@@ -18,21 +18,16 @@ export default function DeletePatient({ patient }) {
           "Content-Type": "application/json",
         },
         cache: "no-store",
-      }).then((res) => {
-        if (res.status === 200) {
-          router.refresh();
-          toast.success("Patient deleted", {
-            position: "top-center",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            router.refresh();
+            toast.success("Patient deleted");
+          }
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
     } else {
       return;
     }
@@ -44,7 +39,7 @@ export default function DeletePatient({ patient }) {
         Delete
       </button>
 
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 }
