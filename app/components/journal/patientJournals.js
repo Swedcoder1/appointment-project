@@ -1,15 +1,18 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import UpdateJournal from "./updateJournal";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 export default function PatientJournal({ journalData }) {
   const [openUpdateJournal, setOpenUpdateJournal] = useState(false);
   const [updateJournal, setUpdateJournal] = useState(null);
+  const router = useRouter();
 
-  console.log("From PatientJournal " + JSON.stringify(journalData, null, " "));
+  // console.log("From PatientJournal " + JSON.stringify(journalData, null, " "));
 
   const deleteJournal = (journalId) => {
-    alert(journalId);
     fetch("http://localhost:3000/api/journal/" + journalId, {
       method: "DELETE",
       headers: {
@@ -18,13 +21,12 @@ export default function PatientJournal({ journalData }) {
     })
       .then((res) => {
         res.json();
-        // router.refresh();
+        router.refresh();
       })
       .catch((error) => console.log(error));
   };
 
   const findId = (journal) => {
-    console.log(journal);
     setUpdateJournal(journal);
     setOpenUpdateJournal(true);
   };
@@ -37,12 +39,12 @@ export default function PatientJournal({ journalData }) {
           const showDate = JSON.stringify(journal.createdAt).slice(1, 11);
           const journalId = journal._id.toString();
           return (
-            <>
+            <Fragment key={journalId}>
               <div
                 className="mb-6 w-11/12 m-auto outline-1 outline rounded-sm"
                 key={journalId}
               >
-                <div className="bg-gray-100 pl-4 py-2">
+                <div className="bg-gray-100 pl-4 py-2 flex justify-between pr-4 items-center">
                   <div>
                     <p className="font-semibold">
                       Therapiest: {journal.therapiest}
@@ -51,15 +53,21 @@ export default function PatientJournal({ journalData }) {
                   </div>
                   <div>
                     {journal.signed ? (
-                      <p className="text-green-500">Signed</p>
+                      <p className="text-green-500 font-semibold">Signed</p>
                     ) : (
-                      <div>
-                        <p className="text-red-500">Not signed</p>
-                        <button onClick={() => deleteJournal(journalId)}>
-                          Delete
-                        </button>
-                        <button onClick={() => findId(journal)}>update</button>
-                      </div>
+                      <>
+                        <p className="text-red-500 font-semibold mb-1">
+                          Not signed
+                        </p>
+                        <div className="flex justify-center space-x-2 items-center text-lg">
+                          <button onClick={() => findId(journal)}>
+                            <FiEdit />
+                          </button>
+                          <button onClick={() => deleteJournal(journalId)}>
+                            <FaRegTrashAlt className="text-red-500" />
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
                 </div>
@@ -72,9 +80,12 @@ export default function PatientJournal({ journalData }) {
                 </div>
               </div>
               {openUpdateJournal && (
-                <UpdateJournal updateJournal={updateJournal} />
+                <UpdateJournal
+                  updateJournal={updateJournal}
+                  setOpenUpdateJournal={setOpenUpdateJournal}
+                />
               )}
-            </>
+            </Fragment>
           );
         })}
       </div>
