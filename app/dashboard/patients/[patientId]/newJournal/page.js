@@ -1,6 +1,5 @@
 "use client";
 import { Field, Form, Formik } from "formik";
-import PreviousHistory from "@/app/components/journal/previousHistory";
 import { historySchema } from "@/app/schema/yup/patientSchema";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
