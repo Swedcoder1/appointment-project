@@ -6,7 +6,7 @@ import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function page({ params }) {
+export default function NewJournal({ params }) {
   const { data: session } = useSession();
   const [checkSigned, setCheckSigned] = useState(false);
   const therapiestName = session?.user?.name;
