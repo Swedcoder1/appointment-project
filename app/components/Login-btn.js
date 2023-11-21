@@ -1,4 +1,5 @@
 "use client";
+import config from "@/config";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { MdHealthAndSafety } from "react-icons/md";
 
@@ -15,7 +16,11 @@ export default function LoginBtn() {
               <h1 className="text-xl text-center">YouCare</h1>
             </div>
             <button
-              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+              onClick={() =>
+                signIn("github", {
+                  callbackUrl: `${config.domainUrl}/dashboard`,
+                })
+              }
               className="bg-gray-200 py-2 px-8 rounded-md text-lg shadow-md"
             >
               Sign in
