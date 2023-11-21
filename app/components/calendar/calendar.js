@@ -10,6 +10,7 @@ import PatientModal from "./patientModal";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "../Loading";
+import config from "@/config";
 
 export default function Calendar() {
   const [openModal, setOpenModal] = useState(false);
@@ -19,7 +20,7 @@ export default function Calendar() {
   const [eventData, setEventData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/appointments", {
+    fetch(`${config.domainUrl}/api/appointments`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

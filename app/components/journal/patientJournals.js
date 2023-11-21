@@ -4,6 +4,7 @@ import UpdateJournal from "./updateJournal";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import config from "@/config";
 
 export default function PatientJournal({ journalData }) {
   const [openUpdateJournal, setOpenUpdateJournal] = useState(false);
@@ -13,7 +14,7 @@ export default function PatientJournal({ journalData }) {
   // console.log("From PatientJournal " + JSON.stringify(journalData, null, " "));
 
   const deleteJournal = (journalId) => {
-    fetch("http://localhost:3000/api/journal/" + journalId, {
+    fetch(`${config.domainUrl}/api/journal/` + journalId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

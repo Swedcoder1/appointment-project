@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import config from "@/config";
 
 export default function PatientModal({ eventData, setOpen }) {
   let date = eventData.event.startStr.slice(0, 10);
@@ -11,7 +12,7 @@ export default function PatientModal({ eventData, setOpen }) {
     // console.log("From delete func " + JSON.stringify(eventData.event.id));
     const id = eventData.event.id;
 
-    fetch("http://localhost:3000/api/appointments/" + id, {
+    fetch(`${config.domainUrl}/api/appointments/` + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

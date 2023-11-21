@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import config from "@/config";
 
 export default function NewJournal({ params }) {
   const { data: session } = useSession();
@@ -31,7 +32,7 @@ export default function NewJournal({ params }) {
           validationSchema={historySchema}
           onSubmit={(values, { resetForm }) => {
             values.signed = checkSigned;
-            fetch("http://localhost:3000/api/journal", {
+            fetch(`${config.domainUrl}/api/journal`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

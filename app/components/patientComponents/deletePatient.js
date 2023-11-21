@@ -1,4 +1,5 @@
 "use client";
+import config from "@/config";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +13,7 @@ export default function DeletePatient({ patient }) {
     );
 
     if (alertConfirm) {
-      fetch("http://localhost:3000/api/patient/" + patientId, {
+      fetch(`${config.domainUrl}/api/patient/` + patientId, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -38,8 +39,6 @@ export default function DeletePatient({ patient }) {
       <button onClick={() => handleDelete(patient)} className="mr-2">
         Delete
       </button>
-
-      {/* <ToastContainer /> */}
     </>
   );
 }

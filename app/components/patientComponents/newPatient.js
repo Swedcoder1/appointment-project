@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
+import config from "@/config";
 
 const NewPatient = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -28,7 +29,7 @@ const NewPatient = () => {
               }}
               validationSchema={formSchema}
               onSubmit={(values, { setSubmitting }) => {
-                fetch("http://localhost:3000/api/patient", {
+                fetch(`${config.domainUrl}/api/patient`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",

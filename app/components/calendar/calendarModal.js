@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { appointmentSchema } from "@/app/schema/yup/appointmentSchema";
+import config from "@/config";
 
 export default function CalendarModal({ setOpenModal, dateStr }) {
   const [patientData, setPatientData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/patient", {
+    fetch(`${config.domainUrl}/api/patient`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export default function CalendarModal({ setOpenModal, dateStr }) {
             setSubmitting(false);
           }, 400);
 
-          fetch("http://localhost:3000/api/appointments", {
+          fetch(`${config.domainUrl}/api/appointments`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

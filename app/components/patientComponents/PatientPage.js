@@ -3,9 +3,10 @@ import { Suspense } from "react";
 import Loading from "../Loading";
 import Error from "../error";
 import { ErrorBoundary } from "react-error-boundary";
+import config from "@/config";
 
 export async function getAllPatient() {
-  let res = await fetch("http://localhost:3000/api/patient", {
+  let res = await fetch(`${config.domainUrl}/api/patient`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

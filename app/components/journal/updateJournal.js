@@ -3,6 +3,7 @@ import { Field, Form, Formik } from "formik";
 import { historySchema } from "@/app/schema/yup/patientSchema";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import config from "@/config";
 
 export default function UpdateJournal({ updateJournal, setOpenUpdateJournal }) {
   const [checkSigned, setCheckSigned] = useState(false);
@@ -28,17 +29,15 @@ export default function UpdateJournal({ updateJournal, setOpenUpdateJournal }) {
         onSubmit={(values, { resetForm }) => {
           values.signed = checkSigned;
           // alert(JSON.stringify(values));
-          fetch(
-            "http://localhost:3000/api/journal/" + updateJournal.patientId,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(values),
-              cache: "no-store",
-            }
-          ).then((res) => {
+
+          fetch(`${config.domainUrl}/api/journal/` + updateJournal.patientId, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+            cache: "no-store",
+          }).then((res) => {
             console.log(res);
             router.refresh();
             setOpenUpdateJournal(false);
